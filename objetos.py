@@ -1,18 +1,15 @@
 
 from Personaje import *
 
-#1. Crear un Objeto de la clase personaje
+# 1. Crear un objeto de la clase Personaje
+heroe = Personaje()
 
-heroe= Personaje()
+# 2. Usar atributos
+print("El personaje se llama: " + heroe.nombre)
+print("Pertenece a la especie: " + heroe.especie)
+print("Y tiene una altura de: " + heroe.altura)
 
-#2. Usar atributos
-
-print("El personaje se llama:"+ heroe.nombre)
-print("pertenece a la especie: "+ heroe.especie)
-print("y tiene una altura de: "+ heroe.altura)
-
-#3. Usar metodos
-
+# 3. Usar métodos
 heroe.correr(True)
 heroe.lanzarGranadas()
-heroe.recargaArmar(87)
+heroe.recargarArma(87)
