@@ -1,7 +1,7 @@
 
 from Personaje import *
 
-#1.Solicitar datos 
+# 1. Solicitar datos 
 print("Ingrese los datos del personaje")
 print("##### datos personaje #####")
 especieH = input("Escribe la especie del heroe: ")
@@ -21,27 +21,30 @@ heroe = Personaje(especieH, nombreH, alturaH)
 villano = Personaje(especieV, nombreV, alturaV)
 
 
-# 3. Usar atributos
+# 3. Usar atributos y métodos de la clase Personaje
+
+#ejemplo del SET para 1 atributo
+
+heroe.setNombre("pepe pecas")
 
 print("")
 print("##### objeto heroe #####")
-print("El personaje se llama: " + heroe.nombre)
-print("Pertenece a la especie: " + heroe.especie)
-print("Y tiene una altura de: " + str(heroe.altura))
+print("El personaje se llama: " + heroe.getNombre())
+print("Pertenece a la especie: " + heroe.getEspecie())
+print("Y tiene una altura de: " + str(heroe.getAltura()))
 
 heroe.correr(True)
 heroe.lanzarGranadas()
-heroe.recargarArma(87)
+heroe.recargarArma(recargarH)
+#ejemplo del GET para 1 atributo
+#heroepensar = heroe._Personaje__pensar()
 
 print("")
 print("##### objeto villano #####")
-print("El personaje se llama: " + villano.nombre)
-print("Pertenece a la especie: " + villano.especie)
-print("Y tiene una altura de: " + str( villano.altura))
+print("El personaje se llama: " + villano.getNombre())
+print("Pertenece a la especie: " + villano.getEspecie())
+print("Y tiene una altura de: " + str(villano.getAltura()))
 
 villano.correr(False)
 villano.lanzarGranadas()
 villano.recargarArma(recargarV)
-
-
-
