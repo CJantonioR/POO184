@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 
+#5. Funcion para mostrar mensajes
 def mostrarMensajes():
     messagebox.showinfo("Mensaje", "presionaste el boton azul")
     messagebox.showwarning("Mensaje", "presionaste el boton azul")
