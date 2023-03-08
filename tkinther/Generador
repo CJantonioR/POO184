@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import messagebox
 import string
 import random
-
 class PasswordGenerator:
     def __init__(self, length=8, include_uppercase=True, include_special=True):
         self.length = length
