@@ -1,42 +1,28 @@
 import tkinter as tk
 from tkinter import messagebox
-import string
-import random
-class PasswordGenerator:
-    def __init__(self, length=8, include_uppercase=True, include_special=True):
-        self.length = length
-        self.include_uppercase = include_uppercase
-        self.include_special = include_special
+from password_generator import PasswordGenerator
 
-    def generate_password(self):
-        characters = string.ascii_lowercase
-        if self.include_uppercase:
-            characters += string.ascii_uppercase
-        if self.include_special:
-            characters += string.punctuation
-
-        password = ''.join(random.choice(characters) for i in range(self.length))
-        return password
-
-
+#SEGUNDA CLASE ES LA VENTANA DE APP
 class ApplicationWindow:
     def __init__(self):
         self.window = tk.Tk()
         self.window.title("Generador de Contraseñas seguras")
         self.window.geometry("350x250")
+        self.create_widgets()
 
-        # Title label
+    def create_widgets(self):
+        # TITULO DE NUESTRA APP
         self.title_label = tk.Label(self.window, text="Generador de Password", font=("Arial", 18, "bold"))
         self.title_label.grid(row=0, column=0, columnspan=2, pady=20)
 
-        # Length label and entry
+        # LA LONGITUD CON UN ENTRY
         self.length_label = tk.Label(self.window, text="Longitud:", font=("Arial", 12))
         self.length_label.grid(row=1, column=0)
         self.length_entry = tk.Entry(self.window, font=("Arial", 12))
         self.length_entry.insert(0, "8")
         self.length_entry.grid(row=1, column=1)
 
-        # Include uppercase checkbox
+        # AGREGAMOS UN RECUADRO PARA INCLUIR MAYUSCULAS
         self.uppercase_var = tk.BooleanVar()
         self.uppercase_check = tk.Checkbutton(self.window,
                                               text="Incluir mayusculas",
@@ -44,7 +30,8 @@ class ApplicationWindow:
                                               font=("Arial", 12))
         self.uppercase_check.grid(row=2, column=0, columnspan=2)
 
-        # Include special characters checkbox
+        # INCLUIMOS UN RECUADRO PARA LOS CARACTERES ESPECIALES
+        
         self.special_var = tk.BooleanVar()
         self.special_check = tk.Checkbutton(self.window,
                                             text="caracteres",
@@ -52,7 +39,7 @@ class ApplicationWindow:
                                             font=("Arial", 12))
         self.special_check.grid(row=3, column=0, columnspan=2)
 
-        # Generate button
+        # CREAMOS NUESTRO BOTINCITO
         self.generate_button = tk.Button(self.window,
                                           text="Generar mi contraseña",
                                           command=self.generate_password,
@@ -60,8 +47,9 @@ class ApplicationWindow:
                                           bg="#4CAF50",
                                           fg="white")
         self.generate_button.grid(row=4, column=0, columnspan=2, pady=20)
+        
 
-        # Generated password label and entry
+        # NUESTRO RECUADRO CON UN ENTRY DONDE NOS MOSTRARA LA CONTRASEÑA
         self.password_label = tk.Label(self.window, text="Contraseña Generada:", font=("Arial", 12))
         self.password_label.grid(row=5, column=0)
         self.password_entry = tk.Entry(self.window, font=("Arial", 12))
@@ -78,9 +66,5 @@ class ApplicationWindow:
         messagebox.showinfo("Generated Password", f"Password: {password}")
 
     def run(self):
-        # Run the main loop
+        # ejecutamos con main loop
         self.window.mainloop()
-
-if __name__ == "__main__":
-    app_window = ApplicationWindow()
-    app_window.run()
