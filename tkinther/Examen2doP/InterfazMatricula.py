@@ -5,7 +5,8 @@ from ventana import Matricula
 class InterfazMatricula:
     def __init__(self, master):
         self.master = master
-        master.title("Generador de Matrícula")
+        master.title("Generador de Matrícula")      
+
         
         self.label_nombre = tk.Label(master, text="Nombre:")
         self.label_nombre.pack()
