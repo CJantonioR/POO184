@@ -1,4 +1,3 @@
-from tkinter import *
 from tkinter import messagebox
 import sqlite3
 import bcrypt 
@@ -49,5 +48,29 @@ class controladorBD:
         print(conHa)
         return conHa
     
+    def consultarUsuario(self, id):
+        #1. preparar la conexion
+        conx= self.conexionBD()
+        
+        #2. verificar el ID no este vacio
+        if id =="":
+            messagebox.showwarning("Cuidado", "Id vacio con escribe un valor")
+        else:
+            #procede a buscar
+            try:
+                #4. Preparar lo necesario para el select
+                cursor= conx.cursor()
+                sqlSelect="select * from TBRegistrados where id="+id
+                
+                #5. Ejecucion y guardado la consulta
+                cursor.execute(sqlSelect)
+                RSusuario= cursor.fetchall()
+                conx.close()
+                
+                return RSusuario
+                
+            except:
+                print("Error consulta")    
+
     
         
