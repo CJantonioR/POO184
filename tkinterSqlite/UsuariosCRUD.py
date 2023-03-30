@@ -6,7 +6,7 @@ from controladorBD import *
 
 # Creamos una instancia de tipo controlador
 controlador = controladorBD()
-
+#modificamos el codigo ya hace lo que el profe pide
 # Procedemos a Guardar usando el metodo del objeto controlador
 def ejecutaInsert():
     controlador.guardarUsuario(varNom.get(), varCor.get(), varCon.get())
