@@ -13,9 +13,13 @@ def ejecutaInsert():
     
 #Funcion para buscar un Usuario
 def ejecutaSelectU():
+    
     rsUsuario = controlador.consultarUsuario(varBus.get())
 
     if rsUsuario:
+        textBus.delete("1.0","end")
+        usuario_data=str(rsUsuario[0])
+        textBus.insert(tk.INSERT,usuario_data)
         usuario = rsUsuario[0]
         varNom.set(usuario[1]) 
         varCor.set(usuario[2]) 

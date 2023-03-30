@@ -66,6 +66,7 @@ class controladorBD:
                 rsUsuario = cursor.fetchall()
                 
                 #6. cerrar conexion y devolver los datos
+                print(rsUsuario)
                 conx.close()
                 return rsUsuario
             except Exception as ex:
@@ -73,8 +74,8 @@ class controladorBD:
                 conx.close()
                 return None
         conx.close()
-        return None
-                    
+        return 
+
 
     
 
