@@ -29,6 +29,16 @@ class controladorBD:
             #3. Preparamos los datos y el querySQL
             cursor = conx.cursor()
             conH= self.encriptarCon(con)
+            
+            #validad si el correo ya esta registrado
+            sqlSelect = "select * from TBRegistrados where Correo=?"
+            cursor.execute(sqlSelect, (cor,))
+            rsUsuario = cursor.fetchall()
+            
+            if len(rsUsuario) > 0:
+                messagebox.showerror("Error", "El correo ya esta registrado")
+                return
+            
             datos = (nom, cor, conH)
             qrInsert = "insert into TBRegistrados(Nombre, Correo, Contraseñas) values(?,?,?)"
             
