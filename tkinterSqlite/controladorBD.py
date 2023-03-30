@@ -55,6 +55,8 @@ class controladorBD:
         #2. verificar el ID no este vacio
         if id =="":
             messagebox.showwarning("Cuidado", "Id vacio con escribe un valor")
+         
+            return
         else:
             try:
                 #4. Preparar lo necesario para el select
