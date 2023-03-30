@@ -51,26 +51,32 @@ class controladorBD:
     def consultarUsuario(self, id):
         #1. preparar la conexion
         conx= self.conexionBD()
-        
+            
         #2. verificar el ID no este vacio
         if id =="":
             messagebox.showwarning("Cuidado", "Id vacio con escribe un valor")
         else:
-            #procede a buscar
             try:
                 #4. Preparar lo necesario para el select
                 cursor= conx.cursor()
-                sqlSelect="select * from TBRegistrados where id="+id
+                sqlSelect="select * from TBRegistrados where id=?"
+                    
+                #5. Ejecutar la consulta y recuperar los datos
+                cursor.execute(sqlSelect, (id,))
+                rsUsuario = cursor.fetchall()
                 
-                #5. Ejecucion y guardado la consulta
-                cursor.execute(sqlSelect)
-                RSusuario= cursor.fetchall()
+                #6. cerrar conexion y devolver los datos
                 conx.close()
-                
-                return RSusuario
-                
-            except:
-                print("Error consulta")    
+                return rsUsuario
+            except Exception as ex:
+                messagebox.showwarning("Error", str(ex))
+                conx.close()
+                return None
+        conx.close()
+        return None
+                    
 
     
+
+        
         

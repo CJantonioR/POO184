@@ -17,11 +17,13 @@ def ejecutaSelectU():
 
     if rsUsuario:
         usuario = rsUsuario[0]
-        cadena = f"Nombre: {usuario[1]}\nCorreo: {usuario[2]}\nContraseña: {usuario[3]}"
-        textBus.delete(1.0, END)
-        textBus.insert(1.0, cadena)
+        varNom.set(usuario[1]) 
+        varCor.set(usuario[2]) 
+        varCon.set(usuario[3]) 
     else:
         messagebox.showinfo("ojito", "Usuario no registrado en la BD")
+
+                       
 
 ventana = Tk()
 ventana.title("CRUD de Usuarios")
@@ -35,36 +37,47 @@ pestana2 = ttk.Frame(panel)
 pestana3 = ttk.Frame(panel)
 pestana4 = ttk.Frame(panel)
 
-# Pestaña1: Formulario de Usuario2
-titulo = Label(pestana1, text="Registro Usuarios", fg="blue", font=("Moder",18)).pack()
+# Pestaña1: Formulario de Usuario
+titulo = Label(pestana1, text="Registro Usuarios", fg="blue", font=("Modern",18))
+titulo.pack()
 
 varNom = tk.StringVar()
-lblNom = Label(pestana1, text="Nombre: ").pack()
-txtNom = Entry(pestana1,textvariable=varNom).pack()
+lblNom = Label(pestana1, text="Nombre: ")
+lblNom.pack()
+txtNom = Entry(pestana1, textvariable=varNom)
+txtNom.pack()
 
 varCor = tk.StringVar()
-lblCor = Label(pestana1, text="Correo: ").pack()
-txtCor = Entry(pestana1,textvariable=varCor).pack()
+lblCor = Label(pestana1, text="Correo: ")
+lblCor.pack()
+txtCor = Entry(pestana1, textvariable=varCor)
+txtCor.pack()
 
 varCon = tk.StringVar()
-lblCon = Label(pestana1, text="Contraseña: ").pack()
-txtCon = Entry(pestana1,textvariable=varCon).pack()
+lblCon = Label(pestana1, text="Contraseña: ")
+lblCon.pack()
+txtCon = Entry(pestana1, textvariable=varCon)
+txtCon.pack()
 
-btnGuardas = Button(pestana1, text="Guardad usuario", command=ejecutaInsert).pack()
+btnGuardas = Button(pestana1, text="Guardar usuario", command=ejecutaInsert)
+btnGuardas.pack()
 
 #Pestaña 2: Buscar Usuario
-titulo2= Label(pestana2, text="Buscar Usuario", fg="blue", font=("Moder",18)).pack()
+titulo2= Label(pestana2, text="Buscar Usuario", fg="blue", font=("Modern",18))
+titulo2.pack()
 
 varBus = tk.StringVar()
-lblid = Label(pestana2, text="Identificador de Usuario: ").pack()
-txtid = Entry(pestana2,textvariable=varBus).pack()
-btnBusqueda= Button(pestana2, text="Buscar", command=ejecutaSelectU).pack()
+lblid = Label(pestana2, text="Identificador de Usuario: ")
+lblid.pack()
+txtid = Entry(pestana2,textvariable=varBus)
+txtid.pack()
+btnBusqueda= Button(pestana2, text="Buscar", command=ejecutaSelectU)
+btnBusqueda.pack()
 
-subBus= Label(pestana2, text="Registrado: ", fg="blue", font=("Modern", 15)).pack()
-textBus= tk.Text(pestana2, height=5, width=52).pack()
-
-
-
+subBus= Label(pestana2, text="Registrado: ", fg="blue", font=("Modern", 15))
+subBus.pack()
+textBus= tk.Text(pestana2, height=5, width=52)
+textBus.pack()
 
 panel.add(pestana1, text="Formulario de usuario")
 panel.add(pestana2, text="Buscar Usuario")
@@ -72,3 +85,5 @@ panel.add(pestana3, text="Consultar Usuarios")
 panel.add(pestana4, text="Actualizar Usuario")
 
 ventana.mainloop()
+
+
