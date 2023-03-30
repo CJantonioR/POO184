@@ -18,16 +18,17 @@ def ejecutaSelectU():
 
     if rsUsuario:
         textBus.delete("1.0","end")
-        #usuario_data=str(rsUsuario[0])
-        # extraer solamente nombre y correo
-        usuario_data = str(rsUsuario[0][1]) + " " + str(rsUsuario[0][2])
-        textBus.insert(tk.INSERT,usuario_data)
-
-        
+        # usuario_data = str(rsUsuario[0])
+        # Extraemos solamente nombre y correo
+        usuario_data = f"Nombre: {rsUsuario[0][1]}\nCorreo: {rsUsuario[0][2]}"
+        textBus.insert(tk.INSERT, usuario_data) 
+    
     else:
-        messagebox.showinfo("ojito", "Usuario no registrado en la BD")
-
-                       
+        messagebox.showinfo("Ojito", "Usuario no registrado en la BD")
+        textBus.delete("1.0","end")
+        return
+        
+                     
 
 ventana = Tk()
 ventana.title("CRUD de Usuarios")
