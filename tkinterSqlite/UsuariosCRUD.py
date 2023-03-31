@@ -27,8 +27,33 @@ def ejecutaSelectU():
         messagebox.showinfo("Ojito", "Usuario no registrado en la BD")
         textBus.delete("1.0","end")
         return
+    
+# Función para Consultar Usuarios de la base de datos
+# Función para Consultar Usuarios de la base de datos
+def ejecutaSelectAll():
+        # Desactivamos el botón para evitar doble clic
+        btnConsulta.config(state="disabled")
         
-                     
+        # Obtenemos todos los usuarios de la base de datos
+        usuarios = controlador.selectAll()
+        
+        # Creamos una instancia del widget Treeview
+        tree = ttk.Treeview(pestana3, columns=('Nombre', 'Correo', 'Contraseña'), show='headings')
+        
+        # Configuramos las columnas del Treeview
+        tree.heading('Nombre', text='Nombre')
+        tree.heading('Correo', text='Correo')
+        tree.heading('Contraseña', text='Contraseña')
+        
+        # Agregamos los usuarios al Treeview
+        for usuario in usuarios:
+            tree.insert('', 'end', values=(usuario[1], usuario[2], usuario[3]))
+        tree.pack()
+        
+        # Reactivamos el botón después de que se complete la consulta
+        btnConsulta.config(state="normal")
+    
+              
 
 ventana = Tk()
 ventana.title("CRUD de Usuarios")
@@ -83,6 +108,17 @@ subBus= Label(pestana2, text="Registrado: ", fg="blue", font=("Modern", 15))
 subBus.pack()
 textBus= tk.Text(pestana2, height=5, width=52)
 textBus.pack()
+
+#Pestaña 3: Consultar Usuarios
+titulo3= Label(pestana3, text="Consultar Usuarios", fg="blue", font=("Modern",18))
+titulo3.pack()
+# Creamos los encabezados de las columnas
+btnConsulta= Button(pestana3, text="Consultar", command=ejecutaSelectAll)
+btnConsulta.pack()
+
+#Pestaña 4: Actualizar Usuario
+
+
 
 panel.add(pestana1, text="Formulario de usuario")
 panel.add(pestana2, text="Buscar Usuario")
