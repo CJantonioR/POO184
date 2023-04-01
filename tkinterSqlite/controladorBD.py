@@ -85,27 +85,31 @@ class controladorBD:
                 messagebox.showwarning("Error", str(ex))
                 conx.close()
                 return None
-        conx.close()
-        return 
-
-    def selectAll(self):
+            
+    def consultarUsuarios(self):
         #1. preparar la conexion
         conx= self.conexionBD()
         
-        #2. Preparar el select
+        #2. Preparar lo necesario para el select
         cursor= conx.cursor()
-        sqlSelect= "select * from TBRegistrados"
-        
-        #3. Ejecutar el select
+        sqlSelect="select * from TBRegistrados"
+                
+                #3. Ejecutar la consulta y recuperar los datos
         cursor.execute(sqlSelect)
-        rsUsuarios= cursor.fetchall()
-        
-        #4. Cerrar la conexion
+        rsUsuarios = cursor.fetchall()
+                
+        #4. cerrar conexion y devolver los datos
+        #print(rsUsuarios)
         conx.close()
-        
-        #5. Devolver los datos
         return rsUsuarios
+        
+    
+    
 
+    
+
+
+    
                             
     
 
