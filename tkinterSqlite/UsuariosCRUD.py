@@ -35,11 +35,26 @@ def ejecutaSelectA():
     # Insertamos los datos en el treeview
     for usuario in rsUsuarios:
         tree.insert("", tk.END, values=usuario)
-        
+    return
 
-# Funcion para actualizar un usuario
+# Funcion para actualizar un usuario    
+
+
     
-
+# Funcion para eliminar un usuario
+def ejecutaDelete():
+    controlador.eliminarUsuario(varBus.get())  
+    textBus.delete("1.0","end")
+    return
+            
+# Funcion para limpiar los campos   
+def limpiarCampos():
+    txtNom.delete(0, END)
+    txtCor.delete(0, END)
+    txtCon.delete(0, END)
+    textBus.delete("1.0","end")
+    return
+ 
 
 # Creamos la ventana principal
 ventana = Tk()
@@ -59,12 +74,15 @@ pestana1 = ttk.Frame(panel)
 pestana2 = ttk.Frame(panel)
 pestana3 = ttk.Frame(panel)
 pestana4 = ttk.Frame(panel)
+pestana5 = ttk.Frame(panel)
+
 
 # Agregamos las pestañas al Notebook
 panel.add(pestana1, text="Formulario de usuario")
 panel.add(pestana2, text="Buscar Usuario")
 panel.add(pestana3, text="Consultar Usuarios")
 panel.add(pestana4, text="Actualizar Usuario")
+panel.add(pestana5, text= "Eliminar Usuario")
 
 
 # Pestaña1: Formulario de Usuario
@@ -91,6 +109,10 @@ txtCon.pack()
 
 btnGuardar = Button(pestana1, text="Guardar usuario", command=ejecutaInsert, bg="#008CBA", fg="white")
 btnGuardar.pack(pady=10)
+
+btnLimpiar = Button(pestana1, text="Limpiar campos", command=limpiarCampos, bg="#008CBA", fg="white")
+btnLimpiar.pack(pady=10)
+
 
 # Creamos los elementos para la pestaña 2 (Buscar usuario)
 titulo2= Label(pestana2, text="Buscar usuario", font=("Arial", 20, "bold"))
@@ -131,6 +153,20 @@ tree.heading(3, text="Correo")
 btnConsulta = Button(pestana3, text="Consultar usuarios", command=ejecutaSelectA, bg="#008CBA", fg="white")
 btnConsulta.pack(pady=10)
 
+# Creamos los elementos para la pestaña 5 (Eliminar usuario)
+titulo5 = Label(pestana5, text="Eliminar usuario", font=("Arial", 20, "bold"))
+titulo5.pack(pady=10)
+
+varid = tk.StringVar()
+lblid = Label(pestana5, text="Identificador de Usuario: ")
+lblid.pack(pady=5)
+    
+txtid = Entry(pestana5, textvariable=varBus, width=30)
+txtid.pack()
+
+# Creamos un botón para eliminar un usuario
+btnEliminar = Button(pestana5, text="Eliminar usuario", command=ejecutaDelete, bg="#008CBA", fg="white")
+btnEliminar.pack(pady=10)
 
 
 

@@ -102,6 +102,33 @@ class controladorBD:
         #print(rsUsuarios)
         conx.close()
         return rsUsuarios
+
+
+    def eliminarUsuario(self, id):
+        #1. preparar la conexion
+        conx= self.conexionBD()
+        
+        #2. Revisar parametros vacios
+        if(id == ""):
+            messagebox.showwarning("Aguas!!", "Revisa este show")
+            conx.close()
+        else:
+            #3. Preparamos los datos y el querySQL
+            cursor = conx.cursor()
+            datos = (id,)
+            qrDelete = "delete from TBRegistrados where id=?"
+            
+            #4. Ejecutamos la consulta y cerramos la conexion
+            cursor.execute(qrDelete, datos)
+            conx.commit()
+            conx.close()
+            messagebox.showinfo("Eliminación", "Eliminación exitosa")
+            
+            return None
+
+                
+
+            
         
     
     
