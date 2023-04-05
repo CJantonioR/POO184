@@ -145,7 +145,8 @@ class controladorBD:
             conx.commit()
             conx.close()
             messagebox.showinfo("Eliminación", "Eliminación exitosa")
-            
+
+                
             return None
 
                 
