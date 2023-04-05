@@ -10,6 +10,10 @@ controlador = controladorBD()
 # Procedemos a Guardar usando el metodo del objeto controlador
 def ejecutaInsert():
     controlador.guardarUsuario(varNom.get(), varCor.get(), varCon.get())
+    varNom.set("")
+    varCor.set("")
+    varCon.set("")
+    
     
 #Funcion para buscar un Usuario
 def ejecutaSelectU():
@@ -38,12 +42,16 @@ def ejecutaSelectA():
     return
 
 # Funcion para actualizar un usuario    
+def ejecutaUpdate():
+    controlador.actualizarUsuario(varid2.get(), varNom2.get(), varCor2.get(), varCon2.get())
+    textBus.delete("1.0","end")
+    return
 
 
     
 # Funcion para eliminar un usuario
 def ejecutaDelete():
-    controlador.eliminarUsuario(varBus.get())  
+    controlador.eliminarUsuario(varBuseliminar.get())  
     textBus.delete("1.0","end")
     return
             
@@ -153,15 +161,51 @@ tree.heading(3, text="Correo")
 btnConsulta = Button(pestana3, text="Consultar usuarios", command=ejecutaSelectA, bg="#008CBA", fg="white")
 btnConsulta.pack(pady=10)
 
+# Creamos los elementos para la pestaña 4 (Actualizar usuario)
+titulo4 = Label(pestana4, text="Actualizar usuario", font=("Arial", 20, "bold"))
+titulo4.pack(pady=10)
+
+varid2 = tk.StringVar()
+lblid = Label(pestana4, text="Identificador de Usuario: ")
+lblid.pack(pady=5)
+
+txtid = Entry(pestana4, textvariable=varid2, width=30)
+txtid.pack()
+
+varNom2 = tk.StringVar()
+lblNom = Label(pestana4, text="Nombre: ")
+lblNom.pack(pady=5)
+txtNom = Entry(pestana4, textvariable=varNom2, width=30)
+txtNom.pack()
+
+
+varCor2 = tk.StringVar()
+lblCor = Label(pestana4, text="Correo: ")
+lblCor.pack(padx=5)
+txtCor = Entry(pestana4, textvariable=varCor2, width=30)
+txtCor.pack()
+
+lblCon = Label(pestana4, text="Contraseña:")
+lblCon.pack(pady=5)
+varCon2 = tk.StringVar()
+txtCon = Entry(pestana4, textvariable=varCon2, width=30, show="*")
+txtCon.pack()
+
+btnActualizar = Button(pestana4, text="Actualizar usuario", command=ejecutaUpdate, bg="#008CBA", fg="white")
+btnActualizar.pack(pady=10)
+
+btnLimpiar = Button(pestana4, text="Limpiar campos", command=limpiarCampos, bg="#008CBA", fg="white")
+btnLimpiar.pack(pady=10)
+
 # Creamos los elementos para la pestaña 5 (Eliminar usuario)
 titulo5 = Label(pestana5, text="Eliminar usuario", font=("Arial", 20, "bold"))
 titulo5.pack(pady=10)
 
-varid = tk.StringVar()
+varBuseliminar = tk.StringVar()
 lblid = Label(pestana5, text="Identificador de Usuario: ")
 lblid.pack(pady=5)
     
-txtid = Entry(pestana5, textvariable=varBus, width=30)
+txtid = Entry(pestana5, textvariable=varBuseliminar, width=30)
 txtid.pack()
 
 # Creamos un botón para eliminar un usuario

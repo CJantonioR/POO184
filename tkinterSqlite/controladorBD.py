@@ -103,6 +103,28 @@ class controladorBD:
         conx.close()
         return rsUsuarios
 
+    def actualizarUsuario(self, id, nom, cor, con):
+        #1. preparar la conexion
+        conx= self.conexionBD()
+        
+        #2. Revisar parametros vacios
+        if(id == "" or nom == "" or cor == "" or con == ""):
+            messagebox.showwarning("Aguas!!", "Revisa este show")
+            conx.close()
+        else:
+            #3. Preparamos los datos y el querySQL
+            cursor = conx.cursor()
+            datos = (nom, cor, con, id)
+            qrUpdate = "update TBRegistrados set Nombre=?, Correo=?, Contraseñas=? where id=?"
+            
+            #4. Ejecutamos la consulta y cerramos la conexion
+            cursor.execute(qrUpdate, datos)
+            conx.commit()
+            conx.close()
+            messagebox.showinfo("Actualización", "Actualización exitosa")
+            
+            return None
+        
 
     def eliminarUsuario(self, id):
         #1. preparar la conexion
