@@ -1,7 +1,9 @@
 from tkinter import messagebox
+from tkinter import ttk
+import tkinter as tk
 import sqlite3
 import bcrypt 
-
+          
 class controladorBD:
     
     def __init__(self):
@@ -117,7 +119,21 @@ class controladorBD:
             datos = (nom, cor, con, id)
             qrUpdate = "update TBRegistrados set Nombre=?, Correo=?, Contraseñas=? where id=?"
             
-            #4. Ejecutamos la consulta y cerramos la conexion
+            #4.verificamos que el Usuario exista en la base de datos
+            sqlSelect = "select * from TBRegistrados where id=?"
+            cursor.execute(sqlSelect, (id,))
+            rsUsuario = cursor.fetchall()
+
+            if len(rsUsuario) == 0:
+                messagebox.showerror("Error", "Usuario no encontrado en la base de datos")
+                return
+            
+            #5. confirmacion de guardad cambios
+            confirmacion = messagebox.askquestion("Actualizar", "¿Estas seguro de guardar los cambios?")
+            if confirmacion == "no":
+                return    
+            
+            #6. Ejecutamos la consulta y cerramos la conexion
             cursor.execute(qrUpdate, datos)
             conx.commit()
             conx.close()
@@ -129,7 +145,7 @@ class controladorBD:
     def eliminarUsuario(self, id):
         #1. preparar la conexion
         conx= self.conexionBD()
-        
+            
         #2. Revisar parametros vacios
         if(id == ""):
             messagebox.showwarning("Aguas!!", "Revisa este show")
@@ -140,14 +156,40 @@ class controladorBD:
             datos = (id,)
             qrDelete = "delete from TBRegistrados where id=?"
             
-            #4. Ejecutamos la consulta y cerramos la conexion
+            #4.confirmacion de eliminar usuario
+            confirmacion = messagebox.askquestion("Eliminar", "¿Estas seguro de eliminar el usuario?")
+            if confirmacion == "no":
+                return  
+            
+            #5. verificamos si el usuario aun existe en nuestra base de datos
+            sqlSelect = "select * from TBRegistrados where id=?"
+            cursor.execute(sqlSelect, (id,))
+            rsUsuario = cursor.fetchall()
+
+            if len(rsUsuario) == 0:
+                messagebox.showerror("Error", "El usuario no existe")
+                return
+
+            #6. Ejecutamos la consulta y cerramos la conexion
             cursor.execute(qrDelete, datos)
             conx.commit()
             conx.close()
             messagebox.showinfo("Eliminación", "Eliminación exitosa")
-
-                
+            
             return None
+
+
+                    
+
+
+         
+ 
+
+            
+
+
+            
+        
 
                 
 

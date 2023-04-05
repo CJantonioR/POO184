@@ -45,15 +45,20 @@ def ejecutaSelectA():
 def ejecutaUpdate():
     controlador.actualizarUsuario(varid2.get(), varNom2.get(), varCor2.get(), varCon2.get())
     textBus.delete("1.0","end")
+    varid2.set("")
+    varNom2.set("")
+    varCor2.set("")
+    varCon2.set("")
     return
-
-
-    
+ 
 # Funcion para eliminar un usuario
 def ejecutaDelete():
     controlador.eliminarUsuario(varBuseliminar.get())  
     textBus.delete("1.0","end")
+    varBuseliminar.set("")
     return
+
+
             
 # Funcion para limpiar los campos   
 def limpiarCampos():
@@ -94,8 +99,8 @@ panel.add(pestana5, text= "Eliminar Usuario")
 
 
 # Pestaña1: Formulario de Usuario
-titulo = Label(pestana1, text="Registro Usuarios", fg="blue",  font=("Arial", 20, "bold"))
-titulo.pack()
+titulo1 = Label(pestana1, text="Formulario de usuario", font=("Arial", 20, "bold"))
+titulo1.pack(pady=10)
 
 varNom = tk.StringVar()
 lblNom = Label(pestana1, text="Nombre: ")
