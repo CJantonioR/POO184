@@ -1,52 +1,35 @@
-from tkinter import messagebox
-from tkinter import ttk
-import tkinter as tk
 import sqlite3
-import bcrypt 
-          
+
 class controladorBD:
     
-# Creamos la conexión a la base de datos
-conexion = sqlite3.connect('BDExportaciones.db')
-
-# Creamos la tabla
-cursor = conexion.cursor()
-cursor.execute('''CREATE TABLE IF NOT EXISTS TBPedimentos 
-                (IDExpo INTEGER PRIMARY KEY AUTOINCREMENT, 
-                Transporte VARCHAR(30), 
-                Aduana VARCHAR(30))''')
-conexion.commit()
-
-
- def __init__(self):
+    def __init__(self):
         pass
         
-    #1. preparamos la conexion para usarla cuando sea necesario
     def conexionBD(self):
         try:
-            conexion = sqlite3.connect("C:/Users/reach/OneDrive/Documentos/POO184/EXAMEN/BDExportaciones.db")
+            conexion = sqlite3.connect("BDExportaciones.db")
             print("conectado BD")
             return conexion
         except sqlite3.OperationalError:
             print("No se pudo conectar")
                   
-    def insertar(self):
+    def insertar(self, transporte, aduana):
         conn = sqlite3.connect('BDExportaciones.db')
         c = conn.cursor()
-        c.execute("INSERT INTO TBPedimentos (IDExpo, Transporte, Aduana) VALUES (?, ?, ?)", 
-                  (self.IDExpo, self.Transporte, self.Aduana))
+        c.execute("INSERT INTO TBPedimentos VALUES (NULL, ?, ?)", (transporte, aduana))
         conn.commit()
         conn.close()
         
-    def eliminar(self):
+      
+        
+    def eliminar(self, id_expo):
         conn = sqlite3.connect('BDExportaciones.db')
         c = conn.cursor()
-        c.execute("DELETE FROM TBPedimentos WHERE IDExpo=?", (self.IDExpo,))
+        c.execute("DELETE FROM TBPedimentos WHERE IDExpo=?", (id_expo,))
         conn.commit()
         conn.close()
         
-    @staticmethod
-    def consultaXAduana(aduana):
+    def consultaXAduana(self, aduana):
         conn = sqlite3.connect('BDExportaciones.db')
         c = conn.cursor()
         c.execute("SELECT * FROM TBPedimentos WHERE Aduana=?", (aduana,))
