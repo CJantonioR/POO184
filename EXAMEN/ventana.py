@@ -4,72 +4,139 @@ import tkinter as tk
 from tkinter import messagebox
 from clase import *
 
+
 # Creamos una instancia de tipo controlador
 controlador = controladorBD()
 
-# Definimos las funciones para las operaciones de inserción, eliminación y consulta
-def insertar():
-    transporte = entrada_transporte.get()
-    aduana = entrada_aduana.get()
-    controlador.insertar(transporte, aduana)
-    mensaje.config(text="Registro insertado correctamente")
-        
-def eliminar():
-    id_expo = entrada_id_expo.get()
-    controlador.eliminar(id_expo)
-    mensaje.config(text="Registro eliminado correctamente")
+# Procedemos a insertar usando el metodo del objeto controlador
+def ejecutaInsert():
+    controlador.insert(varTrans.get(), varAdu.get())
+    varTrans.set("")
+    varAdu.set("")
+    return
+    
+    
+# Funcion para eliminar
+def ejecutaDelete():
+    controlador.delete(varId.get())
+    varId.set("")
+    return
+    
+    #Funcion Consultar Por Aduana
+def ejecutaSelectA():
+    rsAduana = controlador.ConsultaXAduana(varBus.get())
+    if rsAduana:
+        textBus.delete("1.0","end")
 
-def consulta_x_aduana():
-    aduana = entrada_aduana_consulta.get()
-    registros = controlador.consultaXAduana(aduana)
-    resultado.config(text="")
-    for registro in registros:
-        resultado.config(text=resultado.cget("text") + f"{registro[0]} | {registro[1]} | {registro[2]}\n")
-        
+        aduana_data = f"Transportista: {rsAduana[0][1]}\nAduana: {rsAduana[0][2]}"
+        textBus.insert(tk.INSERT, aduana_data) 
+    else:
+        messagebox.showinfo("Ojito", "Aduana no registrada en la BD")
+        textBus.delete("1.0","end")
+        return
 
-# Creamos la interfaz gráfica
-ventana = tk.Tk()
-ventana.title("Exportaciones")
-ventana.geometry("400x300")
 
-# Creamos los elementos de la interfaz gráfica
-etiqueta_transporte = tk.Label(ventana, text="Transporte:")
-entrada_transporte = tk.Entry(ventana)
-etiqueta_aduana = tk.Label(ventana, text="Aduana:")
-entrada_aduana = tk.Entry(ventana)
-boton_insertar = tk.Button(ventana, text="Insertar", command=insertar)
-etiqueta_id_expo = tk.Label(ventana, text="IDExpo:")
-entrada_id_expo = tk.Entry(ventana)
-boton_eliminar = tk.Button(ventana, text="Eliminar", command=eliminar)
-etiqueta_aduana_consulta = tk.Label(ventana, text="Aduana:")
-entrada_aduana_consulta = tk.Entry(ventana)
-boton_consulta = tk.Button(ventana, text="Consulta por Aduana", command=consulta_x_aduana)
-mensaje = tk.Label(ventana, text="")
-resultado = tk.Label(ventana, text="", justify="left")
 
-# Alineamos los elementos en la interfaz gráfica
-etiqueta_transporte.grid(column=0, row=0, padx=5, pady=5)
-entrada_transporte.grid(column=1, row=0, padx=5, pady=5)
-etiqueta_aduana.grid(column=0, row=1, padx=5, pady=5)
-entrada_aduana.grid(column=1, row=1, padx=5, pady=5)
-boton_insertar.grid(column=2, row=0, padx=5, pady=5)
-etiqueta_id_expo.grid(column=0, row=2, padx=5, pady=5)
-entrada_id_expo.grid(column=1, row=2, padx=5, pady=5)
-boton_eliminar.grid(column=2, row=2, padx=5, pady=5)
-etiqueta_aduana_consulta.grid(column=0, row=3, padx=5, pady=5)
-entrada_aduana_consulta.grid(column=1, row=3, padx=5, pady=5)
-boton_consulta.grid(column=2, row=3, padx=5, pady=5)
-mensaje.grid(column=0, row=4, columnspan=3, padx=5, pady=5)
-resultado.grid(column=0, row=5, columnspan=3, padx=5, pady=5)
+      
+# Creamos la ventana principal
+ventana = Tk()
+ventana.title("ADUANA")
+ventana.geometry("650x400")
 
-# Ejecutamos la interfaz gráfica
+# Creamos el Notebook
+panel = ttk.Notebook(ventana, style='TNotebook')
+panel.pack(fill="both", expand="yes")
+
+# Creamos un estilo para el Notebook
+estilo = ttk.Style()
+estilo.configure('TNotebook', tabposition='n')
+
+# Creamos las pestañas
+pestana1 = ttk.Frame(panel)
+pestana2 = ttk.Frame(panel)
+pestana3 = ttk.Frame(panel)
+
+# Agregamos las pestañas al Notebook
+panel.add(pestana1, text="INSERTAR")
+panel.add(pestana2, text="ELIMINAR")
+panel.add(pestana3, text="ConsultaXAduana")
+
+
+# Creamos los widgets para la pestaña 1 INSERTAR
+# Creamos las variables para los campos de texto
+varTrans = StringVar()
+varAdu = StringVar()
+
+# Creamos los campos de texto   
+txtTrans = Entry(pestana1, textvariable=varTrans)
+txtAdu = Entry(pestana1, textvariable=varAdu)
+
+# Creamos los labels
+lblTrans = Label(pestana1, text="Transportista")
+lblAdu = Label(pestana1, text="Aduana")
+
+# Creamos el boton
+btnInsertar = Button(pestana1, text="Insertar", command=ejecutaInsert)
+
+# Creamos el titulo
+titulo1 = Label(pestana1, text="INSERTAR", font=("Arial", 20, "bold"))
+
+# Posicionamos los widgets
+titulo1.grid(row=0, column=0, columnspan=2, pady=10)
+lblTrans.grid(row=1, column=0, pady=5, padx=5)
+txtTrans.grid(row=1, column=1, pady=5, padx=5)
+lblAdu.grid(row=2, column=0, pady=5, padx=5)
+txtAdu.grid(row=2, column=1, pady=5, padx=5)
+btnInsertar.grid(row=4, column=0, columnspan=2, pady=5, padx=5)
+
+# Creamos los widgets para la pestaña 2 ELIMINAR
+# Creamos las variables para los campos de texto
+varId = StringVar()
+
+# Creamos los campos de texto
+txtId = Entry(pestana2, textvariable=varId)
+
+# Creamos los labels
+lblId = Label(pestana2, text="Id")
+
+# Creamos el boton
+btnEliminar = Button(pestana2, text="Eliminar", command=ejecutaDelete)
+
+# Creamos el titulo
+titulo2 = Label(pestana2, text="ELIMINAR", font=("Arial", 20, "bold"))
+
+# Posicionamos los widgets
+titulo2.grid(row=0, column=0, columnspan=2, pady=10)
+lblId.grid(row=1, column=0, pady=5, padx=5)
+txtId.grid(row=1, column=1, pady=5, padx=5)
+btnEliminar.grid(row=2, column=0, columnspan=2, pady=5, padx=5)
+
+# Creamos los widgets para la pestaña 3 ConsiltaXAduana
+# Creamos las variables para los campos de texto
+varBus = StringVar()
+
+# Creamos los campos de texto
+txtBus = Entry(pestana3, textvariable=varBus)
+
+# Creamos los labels
+lblBus = Label(pestana3, text="Aduana")
+
+# Creamos el boton
+btnBus = Button(pestana3, text="Buscar", command=ejecutaSelectA)
+
+# Creamos el titulo
+titulo3 = Label(pestana3, text="CONSULTA X ADUANA", font=("Arial", 20, "bold"))
+
+# Creamos el text
+textBus = Text(pestana3, width=30, height=10)
+
+# Posicionamos los widgets
+titulo3.grid(row=0, column=0, columnspan=2, pady=10)
+lblBus.grid(row=1, column=0, pady=5, padx=5)
+txtBus.grid(row=1, column=1, pady=5, padx=5)
+btnBus.grid(row=2, column=0, columnspan=2, pady=5, padx=5)
+textBus.grid(row=3, column=0, columnspan=2, pady=5, padx=5)
+
+# Iniciamos el mainloop        
 ventana.mainloop()
-
-
-
-
- 
-
-
-
 
